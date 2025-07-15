@@ -9,7 +9,7 @@ Below is a synthesized list of tasks derived from the documentation in the `docs
 - **Install Supabase CLI, Prisma CLI, Stripe CLI, Playwright** – **TODO**
 
 ## 2. Database & Permissions
-- **Create Prisma schema for all entities (`User`, `Tenant`, `Membership`, `Invitation`, `Subscription`, `AuditLog`)** – **TODO**
+- **Create Prisma schema for all entities (`User`, `Tenant`, `Membership`, `Invitation`, `Subscription`, `AuditLog`)** – **DONE**
 - **Generate migrations and apply via Supabase** – **TODO**
 - **Implement RLS helper functions and policies (see `permission.md`)** – **TODO**
 - **Seed demo data (`scripts/seed.ts`)** – **TODO**
