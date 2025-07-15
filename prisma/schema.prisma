@@ -1,0 +1,55 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id             String   @id @default(uuid())
+  email          String   @unique
+  hashedPassword String?
+  createdAt      DateTime @default(now())
+  memberships    Membership[]
+}
+
+model Tenant {
+  id           String   @id @default(uuid())
+  name         String
+  ownerId      String
+  owner        User     @relation(fields: [ownerId], references: [id])
+  memberships  Membership[]
+  invitations  Invitation[]
+  subscription Subscription?
+}
+
+model Membership {
+  id        String   @id @default(uuid())
+  userId    String
+  tenantId  String
+  role      String
+  user      User     @relation(fields: [userId], references: [id])
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+}
+
+model Invitation {
+  id        String   @id @default(uuid())
+  email     String
+  tenantId  String
+  role      String
+  token     String   @unique
+  expiresAt DateTime
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+}
+
+model Subscription {
+  id          String   @id @default(uuid())
+  tenantId    String   @unique
+  stripeSubId String   @unique
+  plan        String
+  seats       Int
+  status      String
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+}
